@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<nav th:fragment="navigation">
+    <ul>
+        <li >
+            <a href="/">CodeFellowship</a>
+        </li>
+        <li th:unless="${user}">
+            <a href="/login">Log in</a>
+        </li>
+        <li th:unless="${user}">
+            <a href="/signup">Sign up</a>
+        </li>
+        <li th:if="${user}">
+            <a href="/profile">Profile</a>
+        </li>
+        <li th:if="${user}">
+            <a href="logout">Log out</a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

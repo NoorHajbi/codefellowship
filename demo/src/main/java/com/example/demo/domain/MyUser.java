@@ -7,12 +7,17 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-public class User implements UserDetails {
+public class MyUser implements UserDetails {
+//    @NotNull: a constrained CharSequence, Collection, Map, or Array is valid as long as it's not null, but it can be empty
+//    @NotEmpty: a constrained CharSequence, Collection, Map, or Array is valid as long as it's not null and its size/length is greater than zero
+//    @NotBlank: a constrained String is valid as long as it's not null and the trimmed length is greater than zero
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(unique = true)
+
+    @Column(unique = true, nullable = false)
     private String password;
     private String username;
     private String firstName;
@@ -20,29 +25,36 @@ public class User implements UserDetails {
     private String dateOfBirth;
     private String bio;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "myUser")
     private final Set<Post> posts = new HashSet<>();
 
-    public User() {
-
+    public MyUser() {
     }
 
-    public User(String password, String username, String firstName, String lastName, String dateOfBirth, String bio) {
+    public MyUser(String password, String username, String firstName, String lastName, String bio, String dateOfBirth) {
         this.password = password;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
         this.bio = bio;
+        this.dateOfBirth = dateOfBirth;
     }
+    //Setters and getters
+
+    public long getId() {
+        return id;
+    }
+
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public String getUsername() {
+        return username;
     }
 
-    public Long getId() {
-        return id;
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
 
@@ -82,15 +94,10 @@ public class User implements UserDetails {
         return posts;
     }
 
+    //Spring security override methods
     @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-
-    @Override
-    public String getUsername() {
-        return this.username;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     @Override
@@ -113,6 +120,7 @@ public class User implements UserDetails {
         return true;
     }
 
+    //toString
     @Override
     public String toString() {
         return "User{" +
@@ -120,4 +128,5 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 '}';
     }
+
 }

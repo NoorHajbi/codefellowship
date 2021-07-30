@@ -1,20 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Sign Up Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Signup</title>
+    <link th:href="@{/style.css}" rel="stylesheet"/>
+    <link th:href="@{/hello.css}" rel="stylesheet"/>
 </head>
 <body>
-<form method="POST" th:action="@{/signup}">
-  <div><label for="username">Username : <input id="username" name="username" type="text"></label></div>
-  <div><label for="password">Password : <input id="password" name="password" type="text"></label></div>
 
-  <div><label for="firstName">firstName : <input id="firstName" name="firstName" type="text"></label></div>
-  <div><label for="lastName">lastName : <input id="lastName" name="lastName" type="text"></label></div>
-  <div><label for="dateOfBirth">dateOfBirth : <input id="dateOfBirth" name="dateOfBirth" type="date"></label></div>
-  <div><label for="bio">bio : <input id="bio" name="bio" type="text"></label></div>
-  <div><input type="submit" value="Submit"/></div>
-</form>
+<nav th:replace="fragments/nav :: navigation"></nav>
+
+<main class="addForm">
+    <center>
+        <br>
+        <br>
+        <form method="POST" th:action="@{/signup}" class="my-form">
+            <label for="username">Username :
+                <br>
+                <input id="username" name="username" type="text"
+                       required></label>
+            <br>
+            <br>
+
+            <label for="password">Password :
+                <br>
+                <input id="password" name="password" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                       title="at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                       required></label>
+            <br>
+            <br>
+
+            <label for="firstName">firstName :
+                <br>
+                <input id="firstName" name="firstName" type="text"></label>
+            <br>
+            <br>
+
+            <label for="lastName">lastName :
+                <br>
+                <input id="lastName" name="lastName" type="text"></label>
+            <br>
+            <br>
+
+            <label for="dateOfBirth">dateOfBirth :
+                <br>
+                <input id="dateOfBirth" name="dateOfBirth" type="date"></label>
+            <br>
+            <br>
+
+            <label for="bio">bio :
+                <br>
+                <input id="bio" name="bio" type="text"></label>
+            <br>
+            <br>
+
+            <input type="submit" value="Submit"/>
+        </form>
+    </center>
+</main>
 </body>
 </html>
 

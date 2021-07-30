@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Profile Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <link th:href="@{/style.css}" rel="stylesheet"/>
+    <link th:href="@{/hello.css}" rel="stylesheet"/>
 </head>
 <body>
+<nav th:replace="fragments/nav :: navigation" ></nav>
 
-<h2>Welcome to <span th:text="${username.firstName}"></span> 's profile</h2>
+<main>
+    <br>
+    <br>
+    <h2>Welcome to <span th:text="${currentUser.firstName}"></span> 's profile</h2>
+    <p>User Name: <span th:text="${currentUser.username}"></span></p>
+    <p>First Name: <span th:text="${currentUser.firstName}"></span></p>
+    <p>Last Name: <span th:text="${currentUser.lastName}"></span></p>
+    <p>Date of Birth: <span th:text="${currentUser.dateOfBirth}"></span></p>
+    <p>Bio: <span th:text="${currentUser.bio}"></span></p>
+    <!--Add it later-->
+    <!--    <div sec:authorize="hasAuthority('ADMIN')">-->
+    <!--        <a href="/delete">Delete Profile </a>-->
+    <!--    </div>-->
 
-<p>User Name: <span th:text="${username.username}"></span></p>
-<p>First Name: <span th:text="${username.firstName}"></span></p>
-<p>Last Name: <span th:text="${username.lastName}"></span></p>
-<p>Date of Birth: <span th:text="${username.dateOfBirth}"></span></p>
-<p>Bio: <span th:text="${username.bio}"></span></p>
-
-<div sec:authorize="hasAuthority('ADMIN')">
-    <a href="/delete">Delete Profile </a>
-</div>
-
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</main>
 </body>
 </html>
-
-
-

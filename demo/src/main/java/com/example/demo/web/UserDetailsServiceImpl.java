@@ -1,12 +1,14 @@
 package com.example.demo.web;
 
-import com.example.demo.domain.User;
+import com.example.demo.domain.MyUser;
 import com.example.demo.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+//userDetailsService after config class
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
@@ -14,14 +16,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
+        MyUser myUserByUsername = userRepository.findUserByUsername(username);
 
-        if (user == null) {
+        if (myUserByUsername == null) {
             System.out.print("Username not found");
             throw new UsernameNotFoundException((username + " not found"));
         }
 
-        return user;
+        return myUserByUsername;
     }
+
 }
 

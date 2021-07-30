@@ -1,20 +1,43 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="https://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link th:href="@{/style.css}" rel="stylesheet"/>
+    <link th:href="@{/hello.css}" rel="stylesheet"/>
 </head>
 <body>
-<div th:if="${param.error}">
-  Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-  You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-  <div><label> Username : <input type="text" name="username"/> </label></div>
-  <div><label> Password : <input type="password" name="password"/> </label></div>
-  <div><input type="submit" value="Sign In"/></div>
-</form>
+
+<nav th:replace="fragments/nav :: navigation" ></nav>
+
+<main class="addForm">
+    <center>
+        <br>
+        <br>
+        <form th:action="@{/login}" method="POST" class="my-form">
+            <label for="username"> Username:
+            </label>
+            <br>
+            <input type="text" name="username" id="username"
+                   required/>
+            <br>
+            <br>
+            <label for="password">Password:</label>
+            <br>
+            <input type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                   title="at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                   required/>
+            <br>
+            <br>
+
+            <input type="submit" class="submit"/>
+        </form>
+    </center>
+</main>
 </body>
 </html>
+
+
+

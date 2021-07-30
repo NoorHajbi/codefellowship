@@ -1,29 +1,28 @@
 package com.example.demo.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     String body;
-    @DateTimeFormat(pattern = "yyyy-mm-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "mm-dd-yyyy HH:mm:ss")
     Date createdAt;
 
     @ManyToOne
-    User user;
+    MyUser myUser;
 
     public Post() {
     }
 
-    public Post(String body, User user) {
+    public Post(String body, MyUser myUser) {
         this.body = body;
-        this.user = user;
+        this.myUser = myUser;
         this.createdAt = new Date();
     }
 
@@ -51,11 +50,11 @@ public class Post {
         this.createdAt = createdAt;
     }
 
-    public User getUser() {
-        return user;
+    public MyUser getMyUser() {
+        return myUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void My(MyUser myUser) {
+        this.myUser = myUser;
     }
 }

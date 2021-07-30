@@ -1,11 +1,11 @@
 package com.example.demo.infrastructure;
 
-import com.example.demo.domain.User;
+import com.example.demo.domain.MyUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findUserByUsername(String username);
+public interface UserRepository extends JpaRepository<MyUser, Long> {
+    MyUser findUserByUsername(String username);
 }
 

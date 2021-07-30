@@ -1,10 +1,10 @@
 package com.example.demo.security;
-//ready
 
 import com.example.demo.web.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,27 +31,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().disable()
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/h2-console/**").permitAll() //antMatchers() for match paths, antMatchers(/**) means all paths in the current level and any nested level below this
-                .antMatchers("/login", "/signup", "/")//.hasAnyAuthority("STUDENT", "ADMIN") //maybe profile instead of login
-                .permitAll() //instead of hasAnyAuthority
+                .antMatchers("/login", "/signup", "/").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin() //for form based login
+                .formLogin()//for form based login so if i disabled line 43, spring's default login page will work
                 .loginPage("/login")
-                .permitAll()
+                .permitAll()  //instead of hasAnyAuthority
+                .defaultSuccessUrl("/profile")
                 .and()
                 .logout()
                 .permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied");
-        http.csrf().disable();
         http.headers().frameOptions().disable();
 
 
+//        lab17
+//                .antMatchers("/h2-console/**").permitAll()
+
         //notes
+        //.antMatchers("/").permitAll() //antMatchers() for match paths, antMatchers(/**) means all paths in the current level and any nested level below this
+        //.antMatchers("/login", "/signup", "/")//.hasAnyAuthority("STUDENT", "ADMIN") //maybe profile instead of login
         //instead of <- antMatchers("/**").permitAll() //permitAll() means allow any kind of access
         //we can use <-  antMatchers("/**").hasRole("USER")
         //or <-  antMatchers("/**").hasAnyRole("USER"," blah"," ") <- for multiple roles
+    }
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }
