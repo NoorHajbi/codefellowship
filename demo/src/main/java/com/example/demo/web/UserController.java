@@ -47,6 +47,7 @@ public class UserController {
         userRepository.findUserByUsername(newUser.getUsername());
         Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, newUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+//        SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         long id = newUser.getId();
         return new RedirectView("/users/" + id);
 

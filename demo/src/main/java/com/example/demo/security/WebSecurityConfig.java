@@ -45,6 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll()
+//                .logoutSuccessUrl("/")  //it will send me to login by default
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied");
         http.headers().frameOptions().disable();
