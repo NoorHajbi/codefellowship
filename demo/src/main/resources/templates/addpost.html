@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Signup</title>
+    <link th:href="@{/style.css}" rel="stylesheet"/>
+    <link th:href="@{/hello.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<nav th:replace="fragments/nav :: navigation"></nav>
+
+<main class="addForm">
+    <center>
+        <br>
+        <br>
+        <form method="POST" action="/posts" class="my-form">
+            <label for="body">Write a new post:</label>
+            <br>
+            <textarea name="body" id="body" rows="6"></textarea>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+
+    </center>
+</main>
+</body>
+</html>

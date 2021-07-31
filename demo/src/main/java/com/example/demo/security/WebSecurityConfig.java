@@ -4,6 +4,7 @@ import com.example.demo.web.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/login", "/signup", "/").permitAll()
+                .antMatchers("/login", "/signup", "/", "/error","*.jpg").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()//for form based login so if i disabled line 43, spring's default login page will work
@@ -60,9 +61,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //or <-  antMatchers("/**").hasAnyRole("USER"," blah"," ") <- for multiple roles
     }
 
-    @Override
+
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+    //other bean classes
+    //1. RedisTemplate is like cashing
+    //2. Model mapper -> analyze our object model to determine how data should mapped/
+
 }

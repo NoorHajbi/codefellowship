@@ -25,8 +25,8 @@ public class MyUser implements UserDetails {
     private String dateOfBirth;
     private String bio;
 
-    @OneToMany(mappedBy = "myUser")
-    private final Set<Post> posts = new HashSet<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "loggedInUser")
+    private List<Post> posts;
 
     public MyUser() {
     }
@@ -90,7 +90,7 @@ public class MyUser implements UserDetails {
         this.bio = bio;
     }
 
-    public Set<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 

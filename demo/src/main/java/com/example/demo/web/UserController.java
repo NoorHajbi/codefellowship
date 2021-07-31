@@ -23,7 +23,6 @@ public class UserController {
     @Autowired
     BCryptPasswordEncoder encoder;
 
-
     @GetMapping("/signup")
     public String getSignUpPage() {
         return "signup";

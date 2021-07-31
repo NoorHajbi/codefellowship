@@ -10,10 +10,11 @@
     <link th:href="@{/hello.css}" rel="stylesheet"/>
 </head>
 <body>
-<nav th:replace="fragments/nav :: navigation" ></nav>
+<nav th:replace="fragments/nav :: navigation"></nav>
 
 <main>
     <br>
+    <img width="70px" src="/pic.jpg">
     <br>
     <h2>Welcome to <span th:text="${currentUser.firstName}"></span> 's profile</h2>
     <p>User Name: <span th:text="${currentUser.username}"></span></p>
@@ -21,6 +22,17 @@
     <p>Last Name: <span th:text="${currentUser.lastName}"></span></p>
     <p>Date of Birth: <span th:text="${currentUser.dateOfBirth}"></span></p>
     <p>Bio: <span th:text="${currentUser.bio}"></span></p>
+    <!--/*Posts.*/-->
+    <br>
+    <br>
+    <div th:each="post : ${currentUser.posts}">
+        <p> Post:
+            <span th:text="${post.body}"></span>
+        </p>
+        <p> Since:
+            <span th:text="${post.createdAt}"></span>
+        </p>
+    </div>
     <!--Add it later-->
     <!--    <div sec:authorize="hasAuthority('ADMIN')">-->
     <!--        <a href="/delete">Delete Profile </a>-->

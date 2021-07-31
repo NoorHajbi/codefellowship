@@ -7,4 +7,6 @@ public class ApplicationController {
     public String home() {
         return "index"; //Html file name
     }
+
+
 }

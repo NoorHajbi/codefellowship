@@ -1,60 +1,54 @@
 package com.example.demo.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
 
     String body;
-    @DateTimeFormat(pattern = "mm-dd-yyyy HH:mm:ss")
-    Date createdAt;
 
+    @DateTimeFormat(pattern = "mm-dd-yyyy HH:mm:ss")
+    Timestamp createdAt;
     @ManyToOne
-    MyUser myUser;
+    MyUser loggedInUser; //the entity that does the mapping
 
     public Post() {
     }
 
-    public Post(String body, MyUser myUser) {
+    public Post(String body, Timestamp createdAt, MyUser loggedInUser) {
         this.body = body;
-        this.myUser = myUser;
-        this.createdAt = new Date();
+        this.createdAt = createdAt;
+        this.loggedInUser = loggedInUser;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getBody() {
         return body;
     }
 
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Date getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public MyUser getLoggedInUser() {
+        return loggedInUser;
     }
 
-    public MyUser getMyUser() {
-        return myUser;
-    }
-
-    public void My(MyUser myUser) {
-        this.myUser = myUser;
+    @Override
+    public String toString() {
+        return "Post{" +
+                "body='" + body + '\'' +
+                ", createdAt=" + createdAt +
+                ", loggedInUser=" + loggedInUser.getUsername() +
+                '}';
     }
 }
