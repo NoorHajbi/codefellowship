@@ -25,10 +25,19 @@ public class MyUser implements UserDetails {
     private String password;
 
     @NotEmpty()
-    @Size(max = 25)
+    @Size(max = 35)
     @Column(unique = true, nullable = false)
     private String username;
+
+    @NotEmpty()
+    @NotEmpty()
+    @Size(max = 15)
+    @Column(nullable = false)
     private String firstName;
+
+    @NotEmpty()
+    @Size(max = 15)
+    @Column(nullable = false)
     private String lastName;
     private String dateOfBirth;
     private String bio;
@@ -48,7 +57,42 @@ public class MyUser implements UserDetails {
         this.bio = bio;
         this.dateOfBirth = dateOfBirth;
     }
-    //Setters and getters
+
+    //lab18
+    @ManyToMany
+    @JoinTable(
+            name = "user_following",
+            joinColumns = {@JoinColumn(name = "from_id")},
+            inverseJoinColumns = {@JoinColumn(name = "to_id")}
+    )
+    public List<MyUser> following;
+
+    @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
+    public List<MyUser> followers;
+
+
+    public void setFollowers(MyUser myUser) {
+        this.followers.add(myUser);
+    }
+
+    public void follow(MyUser myUser) {
+        this.following.add(myUser);
+    }
+
+    public void unfollow(MyUser myUser) {
+        following.remove(myUser);
+    }
+
+
+    public List<MyUser> getFollowing() {
+        return following;
+    }
+
+    public List<MyUser> getFollowers() {
+        return followers;
+    }
+
+//Setters and getters
 
     public long getId() {
         return id;

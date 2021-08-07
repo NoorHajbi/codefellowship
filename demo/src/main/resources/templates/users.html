@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home</title>
+  <link th:href="@{/style.css}" rel="stylesheet"/>
+  <link th:href="@{/hello.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<nav th:replace="fragments/nav :: navigation" ></nav>
+
+<main>
+  <br>
+  <br>
+
+  <div  th:each="users : ${users}">
+
+
+    <h2>User Name:
+      <a th:href="@{/users/{id}(id=${users.id})}">
+      <span th:text="${users.username}"> </span>
+      </a>
+    </h2>
+    <h2>Bio:<span th:text="${users.bio}"> </span></h2>
+
+
+  </div>
+
+
+</main>
+
+
+
+</body>
+</html>
