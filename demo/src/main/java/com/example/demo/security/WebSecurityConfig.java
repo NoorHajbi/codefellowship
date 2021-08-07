@@ -36,12 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/signup" , "/login","/error","*.jpg").permitAll()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin() //for form based login so if i disabled line 43, spring's default login page will work
                 .loginPage("/login")
-//                .permitAll()  //instead of hasAnyAuthority
+                .permitAll()  //instead of hasAnyAuthority
                 .defaultSuccessUrl("/myprofile")
                 .and()
                 .logout()
