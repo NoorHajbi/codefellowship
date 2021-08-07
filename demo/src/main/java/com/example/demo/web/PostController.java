@@ -37,6 +37,7 @@ public class PostController {
         Post newPost = new Post(body, timeStamp, currentUser);
         postRepository.save(newPost);
         m.addAttribute("profile", currentUser);
-        return new RedirectView("/profile");
+        m.addAttribute("user", p);
+        return new RedirectView("/myprofile");
     }
 }
