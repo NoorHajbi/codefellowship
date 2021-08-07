@@ -1,6 +1,8 @@
 package com.example.demo.web;
 
 import com.example.demo.domain.MyUser;
+import com.example.demo.domain.Post;
+import com.example.demo.infrastructure.PostRepository;
 import com.example.demo.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,9 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
+import java.util.Set;
+
 
 @Controller
 public class UserController {
+    @Autowired
+    PostRepository postRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -68,8 +75,50 @@ public class UserController {
         MyUser currentUser = userRepository.findUserByUsername(userDetails.getUsername());
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("user", true);
+        Iterable<Post> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
         return "profile";
     }
 
+
+    //Lab18
+    @GetMapping("/users")
+    public String getAllUsers(Principal principal, Model model) {
+
+        model.addAttribute("alluser", userRepository.findAll());
+        model.addAttribute("user", principal);
+
+        return "users";
+    }
+    @PostMapping ("/follow")
+    public RedirectView followAUser(Principal principal, long followUser) {
+
+        // user to follow and get current logged in user username
+        MyUser poster = userRepository.getById(followUser);
+
+        // get current logged in user username
+        MyUser follower = userRepository.findUserByUsername(principal.getName());
+        // add the curetn logged in user to the following of usertofollow
+//        add usertofollow to current logged in user followers
+        follower.followUser(poster);
+
+        userRepository.save(follower);
+
+        return new RedirectView("/myprofile");
+    }
+
+    @GetMapping("/feed")
+    public String Feed(Principal principal, Model model) {
+
+
+        MyUser currentUser = userRepository.findUserByUsername(principal.getName());
+
+        Set<MyUser> followerList = currentUser.getUsersIFollowing();
+
+        model.addAttribute("personThatIfollowList", followerList);
+
+        model.addAttribute("user", principal);
+        return "feed";
+    }
 
 }

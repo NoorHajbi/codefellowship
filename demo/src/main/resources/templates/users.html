@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home</title>
+  <link th:href="@{/style.css}" rel="stylesheet"/>
+  <link th:href="@{/hello.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<nav th:replace="fragments/nav :: navigation" ></nav>
+
+<main>
+  <br>
+  <br>
+
+  <div  th:each="alluser : ${alluser}">
+
+
+    <h2>First Name:<a th:href="${'/users/' + alluser.id}"><span th:text="${alluser.firstName}"> </span></a></h2>
+    <h2>Bio:<span th:text="${alluser.bio}"> </span></h2>
+
+
+
+    <form action="/follow" method="post">
+      <input type="hidden" name="followUser" th:value="${alluser.id}">
+      <input class="button" type="submit" value="FOLLOW" />
+    </form>
+  </div>
+
+</main>
+
+
+</body>
+</html>

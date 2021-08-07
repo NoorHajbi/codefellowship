@@ -39,6 +39,32 @@ public class MyUser implements UserDetails {
         this.bio = bio;
         this.dateOfBirth = dateOfBirth;
     }
+    //lab18
+    @ManyToMany
+    @JoinTable(
+            name="postersAndFollowers",
+            joinColumns = { @JoinColumn(name="follower") },
+            inverseJoinColumns = { @JoinColumn(name = "poster")}
+    )
+    Set<MyUser> usersIFollowing;
+
+    @ManyToMany(mappedBy = "usersIFollowing" , fetch = FetchType.EAGER)
+    Set<MyUser> usersFollowingMe;
+
+    public void followUser(MyUser followedUser){
+
+        usersIFollowing.add(followedUser);
+    }
+
+
+    public Set<MyUser> getUsersIFollowing() {
+        return usersIFollowing;
+    }
+
+    public Set<MyUser> getUsersFollowingMe() {
+        return usersFollowingMe;
+    }
+
     //Setters and getters
 
     public long getId() {

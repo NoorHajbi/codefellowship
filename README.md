@@ -21,6 +21,12 @@ So it is to hold our work for the last 5 Spring labs.
 5. `http://localhost:8080/posts` -> 
    will send you to **Post Form** page.
 
+6. `http://localhost:8080/users` ->
+   will send you to **Users** page that view all users.
+
+7. `http://localhost:8080/feed` ->
+   will send you to **Feed** page that view all users' posts.
+
 
 ## More Information:
 
