@@ -4,7 +4,7 @@
 <body>
 <nav th:fragment="navigation">
     <ul>
-        <li >
+        <li>
             <a href="/">CodeFellowship</a>
         </li>
         <li th:unless="${user}">
@@ -14,14 +14,14 @@
             <a href="/signup">Sign up</a>
         </li>
         <li th:if="${user}">
-            <a href="/profile">Profile</a>
+            <a href="/myprofile">Profile</a>
         </li>
         <li th:if="${user}">
             <a href="logout">Log out</a>
         </li>
 
         <li th:if="${user}">
-            <a  href="/posts">Add post</a>
+            <a href="/posts">Add post</a>
         </li>
     </ul>
 </nav>

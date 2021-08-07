@@ -3,7 +3,10 @@ package com.example.demo.domain;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.validation.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
@@ -16,16 +19,22 @@ public class MyUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-    @Column(unique = true, nullable = false)
+    @NotEmpty()
+    @Size(min = 8)
+    @Column(nullable = false)
     private String password;
+
+    @NotEmpty()
+    @Size(max = 25)
+    @Column(unique = true, nullable = false)
     private String username;
     private String firstName;
     private String lastName;
     private String dateOfBirth;
     private String bio;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "loggedInUser")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "loggedInUser", cascade = CascadeType.ALL)
+    @OrderBy("id")
     private List<Post> posts;
 
     public MyUser() {
@@ -88,32 +97,16 @@ public class MyUser implements UserDetails {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getBio() {
         return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
     }
 
     public List<Post> getPosts() {

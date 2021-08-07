@@ -17,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.Set;
+import java.util.ArrayList;
 
 
 @Controller
@@ -31,7 +32,8 @@ public class UserController {
     BCryptPasswordEncoder encoder;
 
     @GetMapping("/signup")
-    public String getSignUpPage() {
+    public String getSignUpPage(Principal principal, Model model) {
+        model.addAttribute("user", principal);
         return "signup";
     }
 
@@ -50,9 +52,9 @@ public class UserController {
     ) {
         MyUser newUser = new MyUser(encoder.encode(password), username, firstName, lastName, bio, date);
         newUser = userRepository.save(newUser);
-        // to make user registration logs users into app automatically.
-        userRepository.findUserByUsername(newUser.getUsername());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, newUser.getAuthorities());
+        // to make user signup logins users into app automatically.
+//        userRepository.findUserByUsername(newUser.getUsername());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null,  new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 //        SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         long id = newUser.getId();
@@ -62,21 +64,29 @@ public class UserController {
 
 
     @GetMapping("/users/{id}")
-    public String getUserProfilePage(@PathVariable long id, Model model) {
+    public String getUserProfilePage(@PathVariable long id, Model model,Principal p) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MyUser currentUser = userRepository.findUserByUsername(userDetails.getUsername());
+        MyUser currentUser = userRepository.findById(id).get();
         model.addAttribute("currentUser", currentUser);
+        model.addAttribute("user", p);
+
         return "profile";
     }
 
-    @GetMapping("/profile")
-    public String getProfilePage(Model model) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        MyUser currentUser = userRepository.findUserByUsername(userDetails.getUsername());
-        model.addAttribute("currentUser", currentUser);
-        model.addAttribute("user", true);
-        Iterable<Post> posts = postRepository.findAll();
-        model.addAttribute("posts", posts);
+
+    @GetMapping("/myprofile")
+    public String getProfilePage(Principal principal, Model model) {
+//            first way
+//            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//            MyUser currentUser = userRepository.findUserByUsername(userDetails.getUsername());
+
+//            second way
+            MyUser currentUser = userRepository.findUserByUsername(principal.getName());
+
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("user", principal);
+            Iterable<Post> posts = postRepository.findAll();
+            model.addAttribute("posts", posts);
         return "profile";
     }
 
