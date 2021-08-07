@@ -71,32 +71,16 @@ public class MyUser implements UserDetails {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public String getBio() {
         return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
     }
 
     public List<Post> getPosts() {
