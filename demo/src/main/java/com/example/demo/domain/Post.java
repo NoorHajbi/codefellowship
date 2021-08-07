@@ -11,9 +11,10 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    @Column(nullable = false)
     String body;
 
-    @DateTimeFormat(pattern = "mm-dd-yyyy HH:mm:ss")
+    //    @DateTimeFormat(pattern = "mm-dd-yyyy HH:mm:ss")
     Timestamp createdAt;
     @ManyToOne
     MyUser loggedInUser; //the entity that does the mapping

@@ -62,7 +62,7 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/myprofile")
     public String getProfilePage(Model model) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUser currentUser = userRepository.findUserByUsername(userDetails.getUsername());

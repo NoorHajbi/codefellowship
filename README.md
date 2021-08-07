@@ -15,7 +15,7 @@ So it is to hold our work for the last 5 Spring labs.
 3. `http://localhost:8080/login` -> 
    will send you to **Login** page.
 
-4. `http://localhost:8080/users/{id}` And `http://localhost:8080/profile` ->   
+4. `http://localhost:8080/users/{id}` And `http://localhost:8080/myprofile` ->   
  will send you to **Profile** page.
 
 5. `http://localhost:8080/posts` -> 
