@@ -25,10 +25,19 @@ public class MyUser implements UserDetails {
     private String password;
 
     @NotEmpty()
-    @Size(max = 25)
+    @Size(max = 35)
     @Column(unique = true, nullable = false)
     private String username;
+
+    @NotEmpty()
+    @NotEmpty()
+    @Size(max = 15)
+    @Column(nullable = false)
     private String firstName;
+
+    @NotEmpty()
+    @Size(max = 15)
+    @Column(nullable = false)
     private String lastName;
     private String dateOfBirth;
     private String bio;
@@ -48,33 +57,42 @@ public class MyUser implements UserDetails {
         this.bio = bio;
         this.dateOfBirth = dateOfBirth;
     }
+
     //lab18
     @ManyToMany
     @JoinTable(
-            name="postersAndFollowers",
-            joinColumns = { @JoinColumn(name="follower") },
-            inverseJoinColumns = { @JoinColumn(name = "poster")}
+            name = "user_following",
+            joinColumns = {@JoinColumn(name = "from_id")},
+            inverseJoinColumns = {@JoinColumn(name = "to_id")}
     )
-    Set<MyUser> usersIFollowing;
+    public List<MyUser> following;
 
-    @ManyToMany(mappedBy = "usersIFollowing" , fetch = FetchType.EAGER)
-    Set<MyUser> usersFollowingMe;
+    @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
+    public List<MyUser> followers;
 
-    public void followUser(MyUser followedUser){
 
-        usersIFollowing.add(followedUser);
+    public void setFollowers(MyUser myUser) {
+        this.followers.add(myUser);
+    }
+
+    public void follow(MyUser myUser) {
+        this.following.add(myUser);
+    }
+
+    public void unfollow(MyUser myUser) {
+        following.remove(myUser);
     }
 
 
-    public Set<MyUser> getUsersIFollowing() {
-        return usersIFollowing;
+    public List<MyUser> getFollowing() {
+        return following;
     }
 
-    public Set<MyUser> getUsersFollowingMe() {
-        return usersFollowingMe;
+    public List<MyUser> getFollowers() {
+        return followers;
     }
 
-    //Setters and getters
+//Setters and getters
 
     public long getId() {
         return id;

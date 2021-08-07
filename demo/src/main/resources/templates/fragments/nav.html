@@ -13,16 +13,24 @@
         <li th:unless="${user}">
             <a href="/signup">Sign up</a>
         </li>
+
+        <!-- Current User-->
         <li th:if="${user}">
             <a href="/myprofile">Profile</a>
+        </li>
+        <li th:if="${user}">
+            <a href="/posts">Add post</a>
+        </li>
+        <li th:if="${user}">
+            <a href="/users">Users</a>
+        </li>
+        <li th:if="${user}">
+            <a href="/feed">Feed</a>
         </li>
         <li th:if="${user}">
             <a href="logout">Log out</a>
         </li>
 
-        <li th:if="${user}">
-            <a href="/posts">Add post</a>
-        </li>
     </ul>
 </nav>
 </body>

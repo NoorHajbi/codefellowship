@@ -16,21 +16,22 @@
   <br>
   <br>
 
-  <div  th:each="alluser : ${alluser}">
+  <div  th:each="users : ${users}">
 
 
-    <h2>First Name:<a th:href="${'/users/' + alluser.id}"><span th:text="${alluser.firstName}"> </span></a></h2>
-    <h2>Bio:<span th:text="${alluser.bio}"> </span></h2>
+    <h2>User Name:
+      <a th:href="@{/users/{id}(id=${users.id})}">
+      <span th:text="${users.username}"> </span>
+      </a>
+    </h2>
+    <h2>Bio:<span th:text="${users.bio}"> </span></h2>
 
 
-
-    <form action="/follow" method="post">
-      <input type="hidden" name="followUser" th:value="${alluser.id}">
-      <input class="button" type="submit" value="FOLLOW" />
-    </form>
   </div>
 
+
 </main>
+
 
 
 </body>

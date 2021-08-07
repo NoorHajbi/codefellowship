@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.util.Set;
+import java.util.List;
 import java.util.ArrayList;
 
 
@@ -54,7 +53,7 @@ public class UserController {
         newUser = userRepository.save(newUser);
         // to make user signup logins users into app automatically.
 //        userRepository.findUserByUsername(newUser.getUsername());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null,  new ArrayList<>());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 //        SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         long id = newUser.getId();
@@ -64,12 +63,12 @@ public class UserController {
 
 
     @GetMapping("/users/{id}")
-    public String getUserProfilePage(@PathVariable long id, Model model,Principal p) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String getUserProfilePage(@PathVariable long id, Model model, Principal p) {
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         MyUser currentUser = userRepository.findById(id).get();
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("user", p);
-
+        model.addAttribute("loggedInUser", userRepository.findUserByUsername(p.getName()));
         return "profile";
     }
 
@@ -81,51 +80,55 @@ public class UserController {
 //            MyUser currentUser = userRepository.findUserByUsername(userDetails.getUsername());
 
 //            second way
-            MyUser currentUser = userRepository.findUserByUsername(principal.getName());
+        MyUser currentUser = userRepository.findUserByUsername(principal.getName());
 
-            model.addAttribute("currentUser", currentUser);
-            model.addAttribute("user", principal);
-            Iterable<Post> posts = postRepository.findAll();
-            model.addAttribute("posts", posts);
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("user", principal);
+        model.addAttribute("loggedInUser", currentUser);
+        Iterable<Post> posts = postRepository.findAll();
+        model.addAttribute("posts", posts);
         return "profile";
     }
 
 
     //Lab18
     @GetMapping("/users")
-    public String getAllUsers(Principal principal, Model model) {
-
-        model.addAttribute("alluser", userRepository.findAll());
+    public String showUsers(Principal principal, Model model) {
+        model.addAttribute("users", userRepository.findAll());
         model.addAttribute("user", principal);
-
         return "users";
     }
-    @PostMapping ("/follow")
-    public RedirectView followAUser(Principal principal, long followUser) {
 
-        // user to follow and get current logged in user username
-        MyUser poster = userRepository.getById(followUser);
-
+    @PostMapping("/users/follow")
+    public RedirectView showFollowSuccessScreen(long id, Principal principal) {
         // get current logged in user username
-        MyUser follower = userRepository.findUserByUsername(principal.getName());
-        // add the curetn logged in user to the following of usertofollow
-//        add usertofollow to current logged in user followers
-        follower.followUser(poster);
+        MyUser currentUser = userRepository.findUserByUsername(principal.getName());
+        // user to follow
+        MyUser userToFollow = userRepository.findById(id).get();
 
-        userRepository.save(follower);
-
-        return new RedirectView("/myprofile");
+        // add currentUser to the following of userToFollow
+        currentUser.follow(userToFollow);
+        userRepository.save(currentUser);
+        return new RedirectView("/feed");
     }
+
+    @PostMapping("/users/unfollow")
+    public RedirectView unfollowUserAction(long id, Principal principal) {
+        MyUser currentUser = userRepository.findUserByUsername(principal.getName());
+        MyUser followedUser = userRepository.findById(id).get();
+        currentUser.unfollow(followedUser);
+        userRepository.save(currentUser);
+        return new RedirectView("/feed");
+    }
+
 
     @GetMapping("/feed")
     public String Feed(Principal principal, Model model) {
-
-
         MyUser currentUser = userRepository.findUserByUsername(principal.getName());
 
-        Set<MyUser> followerList = currentUser.getUsersIFollowing();
+        List<MyUser> userFollowing = currentUser.getFollowing();
 
-        model.addAttribute("personThatIfollowList", followerList);
+        model.addAttribute("followedUser", userFollowing);
 
         model.addAttribute("user", principal);
         return "feed";

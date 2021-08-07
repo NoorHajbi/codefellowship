@@ -36,7 +36,7 @@ public class PostController {
         Timestamp timeStamp = Timestamp.valueOf(LocalDateTime.now());
         Post newPost = new Post(body, timeStamp, currentUser);
         postRepository.save(newPost);
-        m.addAttribute("profile", currentUser);
+        m.addAttribute("currentUser", currentUser);
         m.addAttribute("user", p);
         return new RedirectView("/myprofile");
     }

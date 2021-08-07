@@ -33,14 +33,32 @@
             <span th:text="${post.createdAt}"></span>
         </p>
     </div>
+
+    <!--    Lab18-->
+    <div th:if="${currentUser.id != loggedInUser.id}">
+        <form action="/users/follow" method="post">
+            <input type="hidden" name="id" th:value="${currentUser.id}">
+            <input class="button" type="submit" value="Follow"/>
+        </form>
+    </div>
+
+    <div th:if="${currentUser.id != loggedInUser.id}">
+        <form action="/users/unfollow" method="post">
+            <input type="hidden" name="id" th:value="${currentUser.id}">
+            <input class="button" type="submit" value="UnFollow"/>
+        </form>
+    </div>
+
+
     <!--Add it later-->
     <!--    <div sec:authorize="hasAuthority('ADMIN')">-->
     <!--        <a href="/delete">Delete Profile </a>-->
     <!--    </div>-->
-
+    <div th:if="${currentUser.id == loggedInUser.id}">
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out"/>
     </form>
+    </div>
 </main>
 </body>
 </html>
