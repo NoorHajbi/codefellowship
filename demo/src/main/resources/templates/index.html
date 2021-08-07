@@ -16,6 +16,13 @@
     <br>
     <br>
     <h1>Welcome! </h1>
+    <div th:unless="${user}">
+        <p>Join Us !</p>
+        <p>
+            <a href="/signup">Sign Up</a>
+            <a href="/login">Log In</a>
+        </p>
+    </div>
 
 </main>
 
