@@ -27,7 +27,7 @@ So it is to hold our work for the last 5 Spring labs.
 7. `http://localhost:8080/users/{id}` ->
    will send you to **User's** profile page when you click in any user from the previous page, so you can follow/unfollow that user.
 
-8`http://localhost:8080/feed` ->
+8. `http://localhost:8080/feed` ->
    will send you to **Feed** page that view all followed users' posts.
 
 
