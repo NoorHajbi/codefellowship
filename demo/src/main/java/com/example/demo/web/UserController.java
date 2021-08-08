@@ -37,7 +37,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String getLoginPage() {
+    public String getLoginPage(Principal principal, Model model) {
+        model.addAttribute("user", principal);
         return "login";
     }
 
@@ -133,5 +134,6 @@ public class UserController {
         model.addAttribute("user", principal);
         return "feed";
     }
+
 
 }

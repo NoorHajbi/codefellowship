@@ -37,6 +37,12 @@ ul li a i{
 ul li a:hover {
   color: #dad5f7;
 }
+.homePage a{
+  color:#4b14ff;
+}
+.homePage a:hover {
+  color: #6333ff;
+}
 
 /*Main Part*/
 .main{
