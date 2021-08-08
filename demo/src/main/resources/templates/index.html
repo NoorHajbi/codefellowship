@@ -15,14 +15,22 @@
 <main>
     <br>
     <br>
-    <h1>Welcome! </h1>
-    <div th:unless="${user}">
-        <p>Join Us !</p>
-        <p>
-            <a href="/signup">Sign Up</a>
-            <a href="/login">Log In</a>
-        </p>
-    </div>
+    <h1>With CodeFellowship: </h1>
+    <h3><ul>
+        <li> User can sign up/login</li> <br/>
+        <li> User can add a post</li> <br/>
+        <li> User can follow other users</li> <br/>
+        <li> User can see the posts of following users</li> <br/>
+        <li class="homePage" th:unless="${user}">
+            Don't Forget to Join Us !
+            <a href="/signup">Sign up</a>
+        </li>
+        <li class="homePage" th:unless="${user}">
+            <a href="/login">Log in</a>
+        </li>
+    </ul>
+
+    </h3>
 
 </main>
 

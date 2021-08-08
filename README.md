@@ -22,9 +22,12 @@ So it is to hold our work for the last 5 Spring labs.
    will send you to **Post Form** page.
 
 6. `http://localhost:8080/users` ->
-   will send you to **Users** page that view all users so when you click in any user, his profile will be shown, and you can either follow or unfollow him.
+   will send you to **Users** page that view all users.
 
-7. `http://localhost:8080/feed` ->
+7. `http://localhost:8080/users/{id}` ->
+   will send you to **User's** profile page when you click in any user from the previous page, so you can follow/unfollow that user.
+
+8`http://localhost:8080/feed` ->
    will send you to **Feed** page that view all followed users' posts.
 
 
